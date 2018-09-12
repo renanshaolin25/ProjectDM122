@@ -18,6 +18,10 @@ export class StatusPedido{
         this.transportadora = transportadora;
         this.status = status;
     }
+
+    getId(): number{
+        return this.id;
+    }
     
     getDataEmissao(): Date{
         return this.dataEmissao;

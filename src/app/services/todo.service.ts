@@ -14,19 +14,54 @@ export class TodoService{
         this.statusPedidos.push(new StatusPedido(new Date(), null, "Casas Bahia", 135.25, "Cometa 3", "priority-low"));
     }
 
-    addStatusPedido(task:StatusPedido){
-        this.statusPedidos.push(task);
+    addStatusPedido(statusPedido:StatusPedido){
+        statusPedido.setDataEmissao(new Date());
+        statusPedido.setDataAtualizacao(new Date());
+        this.statusPedidos.push(statusPedido);
     }
 
-    editStatusPedido(task:StatusPedido){
-        console.log("Edit StatusPedido");
+    editStatusPedido(statusPedido:StatusPedido){
+        statusPedido.setDataAtualizacao(new Date());
+        this.statusPedidos.forEach(pedido => {
+            if(pedido.getId() == statusPedido.getId()){
+                pedido = statusPedido;
+            }
+        });
     }
 
     loadStatusPedidos(){
+        this.statusPedidos = this.statusPedidos.sort((obj1, obj2) => {
+            if (obj1.getDataAtualizacao > obj2.getDataAtualizacao) {
+                return 1;
+            }
+        
+            if (obj1.getDataAtualizacao < obj2.getDataAtualizacao) {
+                return -1;
+            }
+        
+            return 0;
+        });
+
         return this.statusPedidos;
     }
 
-    removeStatusPedido(task:StatusPedido){
+    loadStatusPedidosPerFilter(statusPedidos:Array<StatusPedido>){
+        statusPedidos = statusPedidos.sort((obj1, obj2) => {
+            if (obj1.getDataAtualizacao > obj2.getDataAtualizacao) {
+                return 1;
+            }
+        
+            if (obj1.getDataAtualizacao < obj2.getDataAtualizacao) {
+                return -1;
+            }
+        
+            return 0;
+        });
+
+        return statusPedidos;
+    }
+
+    removeStatusPedido(statusPedidos:StatusPedido){
         console.log("Remove task");
     }
 }

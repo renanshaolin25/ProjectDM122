@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { TaskPage } from '../task/task';
+import { DetailPedidoPage } from '../detail-pedido/detail-pedido';
+import { AddPedidoPage } from '../add-pedido/add-pedido';
 /* Services */
 import { TodoService } from '../../app/services/todo.service'
 import { StatusPedido } from '../../app/model/statuspedido.model';
@@ -10,16 +11,27 @@ templateUrl: 'home.html'
 })
 export class HomePage {
   statusPedidos:Array<StatusPedido>;
+  selectedStatus: string;
+  status = ["Transporte", "Executando", "Processando"];
+
 constructor(public navCtrl: NavController, private todoService:TodoService) {
   this.statusPedidos = this.todoService.loadStatusPedidos();
+  this.selectedStatus = "";
 }
 
-editItem(statusPedido:StatusPedido){}
+goToDetailPedido(statusPedido:StatusPedido){
+  this.navCtrl.push(DetailPedidoPage, {
+    pedido: statusPedido});
+}
 
 deleteItem(statusPedido:StatusPedido){}
 
-goToTask(){
-  this.navCtrl.push(TaskPage)
+goToAddPedido(){
+  this.navCtrl.push(AddPedidoPage)
+}
+
+filterStatusPedidos(){
+  this.statusPedidos = this.todoService.loadStatusPedidosPerFilter(this.statusPedidos);
 }
 
 }
