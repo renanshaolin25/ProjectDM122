@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>
+      O que devo fazer
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+    <ion-item>
+      <ion-label>Filtrar por: </ion-label>
+      <ion-select [(ngModel)]="selectedStatus" name="selectedStatus" placeholder="Status">
+        <ion-option [value]="s" *ngFor="let s of status">
+          {{s}}
+        </ion-option>
+      </ion-select>
+      <ion-input [(ngModel)]="selectedVendedor" name="detail" type="string" placeholder="Vendedor"></ion-input>
+      <ion-input [(ngModel)]="selectedTransportadora" name="detail" type="string" placeholder="Transportadora"></ion-input>
+    </ion-item>
+    <ion-item>
+      <button ion-button icon-right (click)="filterStatusPedidos()">Filtrar<ion-icon name="funnel"></ion-icon></button>
+      <button ion-button icon-right (click)="loadStatusPedidos()" color="danger">Cancelar<ion-icon name="refresh"></ion-icon></button>
+    </ion-item>
+  </ion-list>
+
+
+  <ion-list>
+    <ion-item-sliding *ngFor="let sp of statusPedidos" [ngClass]="sp.status">
+      <ion-item>
+        <h2>{{sp.id}}</h2>
+        <p>{{sp.vendedor}}</p>
+      </ion-item>
+      <ion-item-options side="right">
+        <button ion-button (click)="goToDetailPedido(sp)" color="secondary" large><ion-icon name="create"></ion-icon></button>
+        <button ion-button (click)="deleteItem(sp)" color="danger" large><ion-icon name="trash"></ion-icon></button>
+      </ion-item-options>
+    </ion-item-sliding>
+    <ion-item></ion-item>
+  </ion-list>
+  <ion-fab right bottom>
+    <button ion-fab (click)="goToAddPedido()"><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
+</ion-content>
